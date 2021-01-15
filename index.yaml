@@ -1,0 +1,46 @@
+apiVersion: v1
+entries:
+  druid:
+  - apiVersion: v2
+    appVersion: 0.19.0
+    created: "2021-01-15T09:29:13.196361247Z"
+    dependencies:
+    - condition: zookeeper.enabled
+      name: zookeeper
+      repository: https://charts.helm.sh/incubator
+      version: 2.1.4
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://charts.helm.sh/stable
+      version: 1.6.4
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.helm.sh/stable
+      version: 8.6.4
+    deprecated: true
+    description: Apache Druid is a high performance real-time analytics database.
+    digest: 190c447e1f594211d3ae7867be78502dcd4c7f92e61cdb30840f39ce4afcc5ba
+    home: https://druid.apache.org/
+    icon: https://druid.apache.org/img/favicon.png
+    keywords:
+    - olap
+    - database
+    - analytics
+    name: druid
+    sources:
+    - https://github.com/SambaTV/charts/tree/main/charts/druid
+    urls:
+    - https://github.com/SambaTV/charts/releases/download/druid-0.2.18/druid-0.2.18.tgz
+    version: 0.2.18
+  kafka-lag-exporter:
+  - created: "2020-10-14T15:55:00+01:00"
+    description: Lightbend Kafka Lag Exporter
+    digest: sha256:383797f7cc37daf9b63e8eb8e7b6bb3d948c07ff86a82474c0792e2160ee56ac
+    home: https://github.com/lightbend/kafka-lag-exporter
+    name: kafka-lag-exporter
+    sources:
+    - https://github.com/lightbend/kafka-lag-exporter
+    urls:
+    - https://github.com/lightbend/kafka-lag-exporter/releases/download/v0.6.5/kafka-lag-exporter-0.6.5.tgz
+    version: 0.6.5
+generated: "0001-01-01T00:00:00Z"
