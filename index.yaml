@@ -3,7 +3,7 @@ entries:
   druid:
   - apiVersion: v2
     appVersion: 0.19.0
-    created: "2021-01-15T09:29:13.196361247Z"
+    created: "2021-01-15T09:32:50.214557865Z"
     dependencies:
     - condition: zookeeper.enabled
       name: zookeeper
@@ -19,7 +19,7 @@ entries:
       version: 8.6.4
     deprecated: true
     description: Apache Druid is a high performance real-time analytics database.
-    digest: 190c447e1f594211d3ae7867be78502dcd4c7f92e61cdb30840f39ce4afcc5ba
+    digest: b87390ad43000d6acd2e12d42c79f62cd898c0e4ff721e41def6cc8244ff10d8
     home: https://druid.apache.org/
     icon: https://druid.apache.org/img/favicon.png
     keywords:
@@ -30,8 +30,8 @@ entries:
     sources:
     - https://github.com/SambaTV/charts/tree/main/charts/druid
     urls:
-    - https://github.com/SambaTV/charts/releases/download/druid-0.2.18/druid-0.2.18.tgz
-    version: 0.2.18
+    - https://github.com/SambaTV/charts/releases/download/druid-0.2.19/druid-0.2.19.tgz
+    version: 0.2.19
   kafka-lag-exporter:
   - created: "2020-10-14T15:55:00+01:00"
     description: Lightbend Kafka Lag Exporter
