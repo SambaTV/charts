@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  kafka-lag-exporter:
+    - created: 2020-10-14T15:55:00.000000000+01:00 
+      description: Lightbend Kafka Lag Exporter
+      digest: sha256:383797f7cc37daf9b63e8eb8e7b6bb3d948c07ff86a82474c0792e2160ee56ac
+      home: https://github.com/lightbend/kafka-lag-exporter
+      name: kafka-lag-exporter
+      sources:
+      - https://github.com/lightbend/kafka-lag-exporter
+      urls:
+      - https://github.com/lightbend/kafka-lag-exporter/releases/download/v0.6.5/kafka-lag-exporter-0.6.5.tgz
+      version: 0.6.5
+
