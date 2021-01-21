@@ -3,11 +3,8 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   labels:
-    app: {{ template "druid.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.middleManager.name }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
   name: {{ template "druid.middleManager.fullname" . }}
 spec:
 {{- if .Values.middleManager.podDisruptionBudget.minAvailable }}
@@ -18,7 +15,6 @@ spec:
 {{- end }}
   selector:
     matchLabels:
-      app: {{ template "druid.name" . }}
+      {{- include "druid.selectorLabels" . | nindent 6 }}
       component: {{ .Values.middleManager.name }}
-      release: {{ .Release.Name }}
 {{- end }}

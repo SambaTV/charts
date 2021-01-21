@@ -10,11 +10,8 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.middleManager.name }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 {{- with .Values.middleManager.ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}

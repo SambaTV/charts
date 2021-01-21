@@ -10,15 +10,12 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.coordinator.name }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-{{- with .Values.coordinator.ingress.annotations }}
+  {{- with .Values.coordinator.ingress.annotations }}
   annotations:
-{{ toYaml . | indent 4 }}
-{{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
 {{- if .Values.coordinator.ingress.tls }}
   tls:

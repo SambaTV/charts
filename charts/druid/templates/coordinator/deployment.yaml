@@ -4,28 +4,23 @@ kind: Deployment
 metadata:
   name: {{ include "druid.coordinator.fullname" . }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.coordinator.name }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.coordinator.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "druid.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "druid.selectorLabels" . | nindent 6 }}
       component: {{ .Values.coordinator.name }}
   template:
     metadata:
-      labels:
-        app: {{ include "druid.name" . }}
-        release: {{ .Release.Name }}
-        component: {{ .Values.coordinator.name }}
       {{- with .Values.coordinator.podAnnotations }}
       annotations:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
+        {{- include "druid.selectorLabels" . | nindent 8 }}
+        component: {{ .Values.coordinator.name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

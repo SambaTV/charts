@@ -4,11 +4,8 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "druid.middleManager.fullname" . }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: "{{ .Values.name }}"
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

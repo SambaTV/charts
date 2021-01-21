@@ -79,3 +79,24 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- define "druid.router.fullname" -}}
 {{ template "druid.fullname" . }}-{{ .Values.router.name }}
 {{- end -}}
+
+{{/*
+Common labels
+*/}}
+{{- define "druid.labels" -}}
+helm.sh/chart: {{ include "druid.chart" . }}
+{{ include "druid.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "druid.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "druid.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+

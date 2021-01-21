@@ -10,11 +10,8 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.overlord.name }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 {{- with .Values.overlord.ingress.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}

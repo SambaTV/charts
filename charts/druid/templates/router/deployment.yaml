@@ -4,28 +4,23 @@ kind: Deployment
 metadata:
   name: {{ include "druid.router.fullname" . }}
   labels:
-    app: {{ include "druid.name" . }}
-    chart: {{ include "druid.chart" . }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.router.name }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.router.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "druid.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "druid.selectorLabels" . | nindent 6 }}
       component: {{ .Values.router.name }}
   template:
     metadata:
-      labels:
-        app: {{ include "druid.name" . }}
-        release: {{ .Release.Name }}
-        component: {{ .Values.router.name }}
       {{- with .Values.router.podAnnotations }}
       annotations:
-{{ toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
+      labels:
+        {{- include "druid.selectorLabels" . | nindent 8 }}
+        component: {{ .Values.router.name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

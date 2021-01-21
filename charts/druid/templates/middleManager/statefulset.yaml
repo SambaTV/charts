@@ -3,30 +3,25 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: {{ template "druid.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    {{- include "druid.labels" . | nindent 4 }}
     component: {{ .Values.middleManager.name }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
   name: {{ template "druid.middleManager.fullname" . }}
 spec:
   serviceName: {{ template "druid.middleManager.fullname" . }}
   replicas: {{ .Values.middleManager.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "druid.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "druid.selectorLabels" . | nindent 6 }}
       component: {{ .Values.middleManager.name }}
   template:
     metadata:
-      labels:
-        app: {{ template "druid.name" . }}
-        component: {{ .Values.middleManager.name }}
-        release: {{ .Release.Name }}
-        {{- if .Values.middleManager.podAnnotations }}
+      {{- with .Values.middleManager.podAnnotations }}
       annotations:
-{{ toYaml .Values.middleManager.podAnnotations | indent 8 }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "druid.selectorLabels" . | nindent 8 }}
+        component: {{ .Values.middleManager.name }}
     spec:
       {{- if or .Values.middleManager.antiAffinity .Values.middleManager.nodeAffinity }}
       affinity:
