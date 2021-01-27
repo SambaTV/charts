@@ -2,7 +2,7 @@
 
 image:
   repository: apache/druid
-  tag: 0.19.0
+  tag: 0.20.0
   pullPolicy: IfNotPresent
   pullSecrets: []
 
@@ -10,6 +10,13 @@ configMap:
   ## If false, configMap will not be applied
   ##
   enabled: true
+
+extensions:
+  - druid-histogram
+  - druid-datasketches
+  - druid-lookups-cached-global
+  - postgresql-metadata-storage
+  - druid-kafka-indexing-service
 
 ## Define the key value pairs in the configmap
 configVars:
@@ -19,19 +26,26 @@ configVars:
   DRUID_USE_CONTAINER_IP: "true"
 
   ## Druid Common Configurations. ref: https://druid.apache.org/docs/latest/configuration/index.html#common-configurations
-  druid_extensions_loadList: '["druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "postgresql-metadata-storage"]'
-  druid_metadata_storage_type: postgresql
-  druid_metadata_storage_connector_connectURI: jdbc:postgresql://postgres:5432/druid
-  druid_metadata_storage_connector_user: druid
-  druid_metadata_storage_connector_password: druid
-  druid_storage_type: local
-  druid_indexer_logs_type: file
-  druid_indexer_logs_directory: /opt/data/indexing-logs
+#  druid_metadata_storage_type: postgresql
+#  druid_metadata_storage_connector_connectURI: jdbc:postgresql://postgres:5432/druid
+#  druid_metadata_storage_connector_user: druid
+#  druid_metadata_storage_connector_password: druid
 
-  ## Druid Emitting Metrics. ref: https://druid.apache.org/docs/latest/configuration/index.html#emitting-metrics
-  druid_emitter: noop
-  druid_emitter_logging_logLevel: debug
-  druid_emitter_http_recipientBaseUrl: http://druid_exporter_url:druid_exporter_port/druid
+#  druid_storage_type: local
+#  druid_indexer_logs_type: file
+#  druid_indexer_logs_directory: /opt/data/indexing-logs
+
+extraConfig:
+  envFrom: []
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
 
 gCloudStorage:
   enabled: false
@@ -119,6 +133,9 @@ coordinator:
     #   cpu: 250m
     #   memory: 512Mi
 
+  securityContext:
+    fsGroup: 1000
+
   nodeSelector: {}
 
   tolerations: []
@@ -174,7 +191,7 @@ historical:
     DRUID_XMX: 512m
     DRUID_XMS: 512m
     DRUID_MAXDIRECTMEMORYSIZE: 400m
-    druid_processing_buffer_sizeBytes: '50000000'
+    druid_processing_buffer_sizeBytes: '500000000'
     druid_processing_numMergeBuffers: 2
     druid_processing_numThreads: 1
     # druid_monitoring_monitors: '["org.apache.druid.client.cache.CacheMonitor", "org.apache.druid.server.metrics.HistoricalMetricsMonitor", "org.apache.druid.server.metrics.QueryCountStatsMonitor"]'
@@ -241,8 +258,11 @@ middleManager:
   config:
     DRUID_XMX: 64m
     DRUID_XMS: 64m
-    druid_indexer_runner_javaOptsArray: '["-server", "-Xms256m", "-Xmx256m", "-XX:MaxDirectMemorySize=300m", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-XX:+ExitOnOutOfMemoryError", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]'
-    druid_indexer_fork_property_druid_processing_buffer_sizeBytes: '25000000'
+    druid_worker_capacity: 8
+    druid_indexer_fork_property_druid_processing_numMergeBuffers: 2
+    druid_indexer_fork_property_druid_processing_numThreads: 1
+    druid_indexer_fork_property_druid_processing_buffer_sizeBytes: '100000000'
+    druid_indexer_runner_javaOptsArray: '["-server", "-Xms512m", "-Xmx512m", "-XX:MaxDirectMemorySize=1000m", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-XX:+ExitOnOutOfMemoryError", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]'
 
   autoscaling:
     enabled: false
@@ -399,3 +419,10 @@ postgresql:
     port: 5432
 
 # Secrets
+
+# ------------------------------------------------------------------------------
+# Prometheus Druid Exporter:
+# ------------------------------------------------------------------------------
+prometheusDruidExporter:
+  enabled: false
+  fullnameOverride: prometheus-druid-exporter

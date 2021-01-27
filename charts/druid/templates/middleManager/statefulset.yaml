@@ -23,6 +23,7 @@ spec:
         {{- include "druid.selectorLabels" . | nindent 8 }}
         component: {{ .Values.middleManager.name }}
     spec:
+      serviceAccountName: {{ include "druid.serviceAccountName" . }}
       {{- if or .Values.middleManager.antiAffinity .Values.middleManager.nodeAffinity }}
       affinity:
       {{- end }}
@@ -77,7 +78,8 @@ spec:
         {{- end}}
         envFrom:
           - configMapRef:
-              name: {{ template "druid.name" . }} 
+              name: {{ template "druid.name" . }}
+{{ toYaml .Values.extraConfig.envFrom | indent 10 }}
         resources:
 {{ toYaml .Values.middleManager.resources | indent 12 }}
         livenessProbe:
@@ -96,14 +98,14 @@ spec:
         - containerPort: {{ .Values.middleManager.port }}
           name: http
         volumeMounts:
-        - mountPath: /opt/druid/var/druid/
+        - mountPath: /opt/druid/var/
           name: data
   {{- if .Values.gCloudStorage.enabled }}
         - name: google-cloud-key
           mountPath: /var/secrets/google
   {{- end }}
       volumes:
-  {{- if not .Values.middleManager.persistence.enabled }} 
+  {{- if not .Values.middleManager.persistence.enabled }}
       - name: data
         emptyDir: {}
   {{- end }}

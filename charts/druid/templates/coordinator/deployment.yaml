@@ -22,6 +22,11 @@ spec:
         {{- include "druid.selectorLabels" . | nindent 8 }}
         component: {{ .Values.coordinator.name }}
     spec:
+      serviceAccountName: {{ include "druid.serviceAccountName" . }}
+{{- if .Values.coordinator.securityContext }}
+      securityContext:
+{{ toYaml .Values.coordinator.securityContext | indent 8 }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -35,6 +40,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "druid.name" . }}
+{{ toYaml .Values.extraConfig.envFrom | indent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.coordinator.port }}
@@ -52,11 +58,15 @@ spec:
           resources:
 {{ toYaml .Values.coordinator.resources | indent 12 }}
           volumeMounts:
+            - mountPath: /opt/druid/var
+              name: data
   {{- if .Values.gCloudStorage.enabled }}
             - name: google-cloud-key
               mountPath: /var/secrets/google
   {{- end }}
       volumes:
+        - name: data
+          emptyDir: {}
   {{- if .Values.gCloudStorage.enabled }}
       - name: google-cloud-key
         secret:

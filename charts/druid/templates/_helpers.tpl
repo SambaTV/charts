@@ -100,3 +100,13 @@ app.kubernetes.io/name: {{ include "druid.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "druid.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "druid.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}

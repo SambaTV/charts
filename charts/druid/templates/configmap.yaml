@@ -9,6 +9,16 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
+  druid_extensions_loadList: {{ .Values.extensions | toJson | squote }}
+{{- if .Values.prometheusDruidExporter.enabled }}
+  druid_emitter_http_recipientBaseUrl: http://{{ .Values.prometheusDruidExporter.fullnameOverride }}:8080/druid
+  druid_emitter: http
+{{- else }}
+  ## Druid Emitting Metrics. ref: https://druid.apache.org/docs/latest/configuration/index.html#emitting-metrics
+  druid_emitter: noop
+  druid_emitter_logging_logLevel: debug
+  druid_emitter_http_recipientBaseUrl: http://druid_exporter_url:druid_exporter_port/druid
+{{- end }}
 {{ toYaml .Values.configVars | indent 2 }}
 {{- if .Values.zookeeper.enabled }}
   druid_zk_service_host: {{ .Release.Name }}-zookeeper-headless:2181

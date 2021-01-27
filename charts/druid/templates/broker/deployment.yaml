@@ -22,6 +22,11 @@ spec:
         {{- include "druid.selectorLabels" . | nindent 8 }}
         component: {{ .Values.broker.name }}
     spec:
+      serviceAccountName: {{ include "druid.serviceAccountName" . }}
+{{- if .Values.coordinator.securityContext }}
+      securityContext:
+{{ toYaml .Values.coordinator.securityContext | indent 8 }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -35,6 +40,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "druid.name" . }}
+{{ toYaml .Values.extraConfig.envFrom | indent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.broker.port }}
@@ -49,6 +55,9 @@ spec:
             httpGet:
               path: /status/health
               port: {{ .Values.broker.port }}
+          volumeMounts:
+            - mountPath: /opt/druid/var
+              name: data
           resources:
 {{ toYaml .Values.broker.resources | indent 12 }}
     {{- with .Values.broker.nodeSelector }}
@@ -63,6 +72,9 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
+      volumes:
+        - name: data
+          emptyDir: {}
     {{- with .Values.image.pullSecrets }}
       imagePullSecrets:
 {{ toYaml . | indent 8 }}

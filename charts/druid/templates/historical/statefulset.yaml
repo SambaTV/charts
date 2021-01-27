@@ -23,6 +23,7 @@ spec:
         {{- include "druid.selectorLabels" . | nindent 8 }}
         component: {{ .Values.historical.name }}
     spec:
+      serviceAccountName: {{ include "druid.serviceAccountName" . }}
       {{- if or .Values.historical.antiAffinity .Values.historical.nodeAffinity }}
       affinity:
       {{- end }}
@@ -78,6 +79,7 @@ spec:
         envFrom:
           - configMapRef:
               name: {{ template "druid.name" . }}
+{{ toYaml .Values.extraConfig.envFrom | indent 10 }}
         resources:
 {{ toYaml .Values.historical.resources | indent 12 }}
         livenessProbe:
@@ -96,7 +98,7 @@ spec:
         - containerPort: {{ .Values.historical.port }}
           name: http
         volumeMounts:
-        - mountPath: /opt/druid/var/druid/
+        - mountPath: /opt/druid/var/
           name: data
   {{- if .Values.gCloudStorage.enabled }}
         - name: google-cloud-key
