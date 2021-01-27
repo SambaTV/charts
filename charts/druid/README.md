@@ -1,22 +1,17 @@
-# ⚠️ Repo Archive Notice
-
-As of Nov 13, 2020, charts in this repo will no longer be updated.
-For more information, see the Helm Charts [Deprecation and Archive Notice](https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice), and [Update](https://helm.sh/blog/charts-repo-deprecation/).
-
 # Apache Druid
 
 [Apache Druid](https://druid.apache.org/) is a high performance real-time analytics database.
 
-## DEPRECATION NOTICE
-
-This chart is deprecated and no longer supported.
+## Chart
+Chart is fork from deprecated `incubator/druid` repository.
 
 ## Install Chart
 
 To install the Druid Chart into your Kubernetes cluster :
 
 ```bash
-helm install --namespace "druid" --name "druid" incubator/druid
+helm repo add samba https://sambatv.github.io/charts
+helm install --namespace "druid" --name "druid" samba/druid
 ```
 
 After installation succeeds, you can get a status of Chart
