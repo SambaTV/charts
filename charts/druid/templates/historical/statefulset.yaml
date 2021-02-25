@@ -85,7 +85,7 @@ spec:
         resources:
 {{ toYaml .Values.historical.resources | indent 12 }}
         livenessProbe:
-          initialDelaySeconds: 60
+          initialDelaySeconds: {{ .Values.historical.livenessProbe.initialDelaySeconds }}
           httpGet:
             path: /status/health
             port: {{ .Values.historical.port }}
