@@ -36,7 +36,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "druid.name" . }}
+{{ if .Values.extraConfig.envFrom }}
 {{ toYaml .Values.extraConfig.envFrom | indent 12 }}
+{{ end }}
           ports:
             - name: http
               containerPort: {{ .Values.router.port }}

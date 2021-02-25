@@ -79,7 +79,9 @@ spec:
         envFrom:
           - configMapRef:
               name: {{ template "druid.name" . }}
-{{ toYaml .Values.extraConfig.envFrom | indent 10 }}
+{{ if .Values.extraConfig.envFrom }}
+{{ toYaml .Values.extraConfig.envFrom | indent 12 }}
+{{ end }}
         resources:
 {{ toYaml .Values.historical.resources | indent 12 }}
         livenessProbe:
