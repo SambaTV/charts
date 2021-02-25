@@ -227,6 +227,9 @@ historical:
 
   tolerations: []
 
+  readinessProbe:
+    initialDelaySeconds: 60
+
   resources: {}
     # limits:
     #   cpu: 2
@@ -256,8 +259,8 @@ middleManager:
   serviceType: ClusterIP
 
   config:
-    DRUID_XMX: 64m
-    DRUID_XMS: 64m
+    DRUID_XMX: 512m
+    DRUID_XMS: 128m
     druid_worker_capacity: 8
     druid_indexer_fork_property_druid_processing_numMergeBuffers: 2
     druid_indexer_fork_property_druid_processing_numThreads: 1
