@@ -80,7 +80,7 @@ spec:
           - configMapRef:
               name: {{ template "druid.name" . }}
 {{ if .Values.extraConfig.envFrom }}
-{{ toYaml .Values.extraConfig.envFrom | indent 12 }}
+{{ toYaml .Values.extraConfig.envFrom | indent 10 }}
 {{ end }}
         resources:
 {{ toYaml .Values.historical.resources | indent 12 }}
