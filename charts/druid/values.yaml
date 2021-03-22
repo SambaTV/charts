@@ -229,9 +229,13 @@ historical:
 
   readinessProbe:
     initialDelaySeconds: 60
+    failureThreshold: 3
+    periodSeconds: 10
 
   livenessProbe:
     initialDelaySeconds: 60
+    failureThreshold: 3
+    periodSeconds: 10
 
   resources: {}
     # limits:

@@ -86,11 +86,15 @@ spec:
 {{ toYaml .Values.historical.resources | indent 12 }}
         livenessProbe:
           initialDelaySeconds: {{ .Values.historical.livenessProbe.initialDelaySeconds }}
+          failureThreshold: {{ .Values.historical.livenessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.historical.livenessProbe.periodSeconds }}
           httpGet:
             path: /status/health
             port: {{ .Values.historical.port }}
         readinessProbe:
           initialDelaySeconds: {{ .Values.historical.readinessProbe.initialDelaySeconds }}
+          failureThreshold: {{ .Values.historical.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.historical.readinessProbe.periodSeconds }}
           httpGet:
             path: /status/health
             port: {{ .Values.historical.port }}
