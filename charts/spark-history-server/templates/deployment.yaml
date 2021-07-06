@@ -28,7 +28,6 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        serviceAccountName:  {{ include "spark-history-server.serviceAccountName" . }}
         env:
         - name: HADOOP_CONF_DIR
           value: {{ .Values.hdfs.HADOOP_CONF_DIR }}
