@@ -218,4 +218,20 @@ entries:
     urls:
     - https://github.com/lightbend/kafka-lag-exporter/releases/download/v0.6.5/kafka-lag-exporter-0.6.5.tgz
     version: 0.6.5
+  spark-history-server:
+  - apiVersion: v1
+    appVersion: 2.4.0
+    created: "2021-07-06T14:08:35.204922661Z"
+    description: A Helm chart for Spark History Server
+    digest: ea15edc26edcef8eecc37612a111c27600772fc316deee828e55525ef64865ed
+    home: https://spark.apache.org
+    keywords:
+    - spark
+    - history-server
+    name: spark-history-server
+    sources:
+    - https://github.com/apache/spark
+    urls:
+    - https://github.com/SambaTV/charts/releases/download/spark-history-server-1.4.3/spark-history-server-1.4.3.tgz
+    version: 1.4.3
 generated: "0001-01-01T00:00:00Z"
