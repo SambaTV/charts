@@ -221,6 +221,21 @@ entries:
   spark-history-server:
   - apiVersion: v1
     appVersion: 2.4.0
+    created: "2021-07-07T09:16:25.476857815Z"
+    description: A Helm chart for Spark History Server
+    digest: 2701a83edcd60fd7ce5d5a484fb7d7b516668a6e0beb37e808ffde6f04cbc2a1
+    home: https://spark.apache.org
+    keywords:
+    - spark
+    - history-server
+    name: spark-history-server
+    sources:
+    - https://github.com/apache/spark
+    urls:
+    - https://github.com/SambaTV/charts/releases/download/spark-history-server-1.4.7/spark-history-server-1.4.7.tgz
+    version: 1.4.7
+  - apiVersion: v1
+    appVersion: 2.4.0
     created: "2021-07-06T14:33:48.312060598Z"
     description: A Helm chart for Spark History Server
     digest: 44b54e0a6f843d450bd8bb38f4948723a70b7609505a1665be1d0d71ab035996
