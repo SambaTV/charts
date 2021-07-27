@@ -1,0 +1,17 @@
+{{- if .Values.broker.hpa.enabled -}}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "druid.broker.fullname" . }}
+  labels:
+    {{- include "druid.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "druid.broker.fullname" . }}
+  minReplicas: {{ .Values.broker.hpa.spec.minReplicas }}
+  maxReplicas: {{ .Values.broker.hpa.spec.maxReplicas }}
+  metrics:
+    {{- toYaml .Values.broker.hpa.spec.metrics | nindent 4 -}}
+{{- end -}}
