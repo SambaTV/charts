@@ -48,12 +48,16 @@ spec:
               containerPort: {{ .Values.coordinator.port }}
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 60
+            initialDelaySeconds: {{ .Values.coordinator.livenessProbe.initialDelaySeconds }}
+            failureThreshold: {{ .Values.coordinator.livenessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.coordinator.livenessProbe.periodSeconds }}
             httpGet:
               path: /status/health
               port: {{ .Values.coordinator.port }}
           readinessProbe:
-            initialDelaySeconds: 60
+            initialDelaySeconds: {{ .Values.coordinator.readinessProbe.initialDelaySeconds }}
+            failureThreshold: {{ .Values.coordinator.readinessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.coordinator.readinessProbe.periodSeconds }}
             httpGet:
               path: /status/health
               port: {{ .Values.coordinator.port }}
