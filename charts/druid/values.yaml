@@ -25,7 +25,7 @@ configVars:
   # DRUID_LOG4J: <?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>
   DRUID_USE_CONTAINER_IP: "true"
   druid_indexer_logs_kill_enabled: "true"
-  druid_indexer_logs_kill_durationToRetain: "0"
+  druid_indexer_logs_kill_durationToRetain: "86400000"
 
   ## Druid Common Configurations. ref: https://druid.apache.org/docs/latest/configuration/index.html#common-configurations
 #  druid_metadata_storage_type: postgresql
