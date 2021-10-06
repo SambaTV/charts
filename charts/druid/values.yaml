@@ -24,6 +24,8 @@ configVars:
   # DRUID_LOG_LEVEL: "warn"
   # DRUID_LOG4J: <?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root><Logger name="org.apache.druid.jetty.RequestLog" additivity="false" level="DEBUG"><AppenderRef ref="Console"/></Logger></Loggers></Configuration>
   DRUID_USE_CONTAINER_IP: "true"
+  druid_indexer_logs_kill_enabled: "true"
+  druid_indexer_logs_kill_durationToRetain: "0"
 
   ## Druid Common Configurations. ref: https://druid.apache.org/docs/latest/configuration/index.html#common-configurations
 #  druid_metadata_storage_type: postgresql
@@ -123,6 +125,10 @@ coordinator:
   config:
     DRUID_XMX: 256m
     DRUID_XMS: 256m
+    druid_coordinator_kill_on: "true"
+    druid_coordinator_kill_period: "PT1H"
+    druid_coordinator_kill_durationToRetain: "PT1S"
+    druid_coordinator_kill_maxSegments: 4096
     # druid_monitoring_monitors: '["org.apache.druid.server.metrics.TaskCountStatsMonitor"]'
 
   ingress:
