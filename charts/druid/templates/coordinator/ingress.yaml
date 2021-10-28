@@ -1,7 +1,9 @@
 {{- if .Values.coordinator.ingress.enabled -}}
 {{- $fullName := include "druid.coordinator.fullname" . -}}
 {{- $ingressPath := .Values.coordinator.ingress.path -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -17,24 +19,34 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.coordinator.ingress.tls }}
+  {{- if and .Values.coordinator.ingress.ingressClassName (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.coordinator.ingress.ingressClassName }}
+  {{- end }}
+  {{- if .Values.coordinator.ingress.tls }}
   tls:
-  {{- range .Values.coordinator.ingress.tls }}
+    {{- range .Values.coordinator.ingress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
       {{- end }}
       secretName: {{ .secretName }}
+    {{- end }}
   {{- end }}
-{{- end }}
   rules:
-  {{- range .Values.coordinator.ingress.hosts }}
+    {{- range .Values.coordinator.ingress.hosts }}
     - host: {{ . | quote }}
       http:
         paths:
           - path: {{ $ingressPath }}
             backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: http
+              {{- end  }}
+    {{- end }}
   {{- end }}
-{{- end }}
