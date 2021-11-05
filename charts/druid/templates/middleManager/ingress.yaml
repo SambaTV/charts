@@ -10,7 +10,7 @@ metadata:
     component: {{ .Values.middleManager.name }}
   {{- with .Values.middleManager.ingress.annotations }}
   annotations:
-    {{- toYaml . | indent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if .Values.middleManager.ingress.ingressClassName }}

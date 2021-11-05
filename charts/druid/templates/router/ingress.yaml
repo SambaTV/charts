@@ -10,7 +10,7 @@ metadata:
     component: {{ .Values.router.name }}
   {{- with .Values.router.ingress.annotations }}
   annotations:
-    {{- toYaml . | indent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if .Values.router.ingress.ingressClassName }}

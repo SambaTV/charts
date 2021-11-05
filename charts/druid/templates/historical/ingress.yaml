@@ -10,7 +10,7 @@ metadata:
     component: {{ .Values.historical.name }}
   {{- with .Values.historical.ingress.annotations }}
   annotations:
-    {{- toYaml . | indent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if .Values.historical.ingress.ingressClassName }}

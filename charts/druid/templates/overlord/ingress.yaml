@@ -10,7 +10,7 @@ metadata:
     component: {{ .Values.overlord.name }}
   {{- with .Values.overlord.ingress.annotations }}
   annotations:
-    {{- toYaml . | indent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   {{- if .Values.overlord.ingress.ingressClassName }}
