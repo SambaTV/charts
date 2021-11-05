@@ -73,6 +73,7 @@ broker:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -133,6 +134,7 @@ coordinator:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -186,6 +188,7 @@ overlord:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -228,6 +231,7 @@ historical:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -323,6 +327,7 @@ middleManager:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -386,6 +391,7 @@ router:
 
   ingress:
     enabled: false
+    # ingressClassName: nginx
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
