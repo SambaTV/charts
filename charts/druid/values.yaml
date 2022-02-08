@@ -114,6 +114,12 @@ broker:
 #            type: Utilization
 #            averageUtilization: 50
 
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
+
 coordinator:
   ## If false, coordinator will not be installed
   ##
@@ -175,6 +181,12 @@ coordinator:
     failureThreshold: 3
     periodSeconds: 10
 
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
+
 overlord:
   ## If true, the separate overlord will be installed
   ##
@@ -209,6 +221,12 @@ overlord:
   affinity: {}
 
   podAnnotations: {}
+
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
 
 historical:
   ## If false, historical will not be installed
@@ -288,6 +306,12 @@ historical:
 
   updateStrategy:
     type: RollingUpdate
+
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
 
 middleManager:
   ## If false, middleManager will not be installed
@@ -375,6 +399,12 @@ middleManager:
   updateStrategy:
     type: RollingUpdate
 
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
+
 router:
   ## If false, router will not be installed
   ##
@@ -418,6 +448,12 @@ router:
   affinity: {}
 
   podAnnotations: {}
+
+  extraEnv: []
+
+  extraVolumeMounts: []
+
+  extraVolumes: []
 
 # ------------------------------------------------------------------------------
 # Zookeeper:
