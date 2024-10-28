@@ -3,6 +3,41 @@ entries:
   druid:
   - apiVersion: v2
     appVersion: 0.20.0
+    created: "2024-10-28T21:25:13.531469747Z"
+    dependencies:
+    - condition: zookeeper.enabled
+      name: zookeeper
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+      version: 7.6.2
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+      version: 8.2.7
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+      version: 10.2.3
+    - alias: prometheusDruidExporter
+      condition: prometheusDruidExporter.enabled
+      name: prometheus-druid-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 0.9.0
+    description: Apache Druid is a high performance real-time analytics database.
+    digest: 07d6d9f1cdf0abd2deeb249fe0a77dc08149a3c7b6b3627ad57ed67adb98712b
+    home: https://druid.apache.org/
+    icon: https://druid.apache.org/img/favicon.png
+    keywords:
+    - olap
+    - database
+    - analytics
+    name: druid
+    sources:
+    - https://github.com/SambaTV/charts/tree/main/charts/druid
+    urls:
+    - https://github.com/SambaTV/charts/releases/download/druid-0.3.13/druid-0.3.13.tgz
+    version: 0.3.13
+  - apiVersion: v2
+    appVersion: 0.20.0
     created: "2022-02-08T18:28:10.917532801Z"
     dependencies:
     - condition: zookeeper.enabled
